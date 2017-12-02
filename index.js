@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var path = require('path');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -8,6 +9,7 @@ app.use(express.static(__dirname + '/public'));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/', function(request, response) {
   response.render('pages/index')
@@ -47,3 +49,4 @@ app.get('/db', function (request, response) {
     app.get('/search', function(req, res) {
         res.render('pages/search');
     })
+
