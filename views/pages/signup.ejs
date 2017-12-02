@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>BikeRack</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shirnk-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img class="img-icon" src="./img/bike_icon.jpeg">;
+                    <a class="navbar-brand" href="/index">BikeRack</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/index">Home</a></li>
+		    <li><a href="/login">Log In</a></li>
+                    <li class="active"><a href="/signup">Sign Up</a></li>
+                    <li><a href="/search">Search</a></li>
+                </ul>
+            </div>
+        </nav>	
+
+
+        <div class="view" id="view-signup">
+            <div class="container">
+                <div class="login flex-container">
+	            <br> <br> <br> <br> <br> <br> <br>
+                    <form action="#"/search.html>
+                        <h4> Planning ahead for a trip? </h4>
+                        <p> Use <strong><font color="#6699ff">BikeRack</font></strong> 
+                        to locate a bike share location near your destination.</p>
+	                <center>
+                            <h1 align="center"> Sign Up </h1>
+		            <br>
+                            <input  class="form-control flex-item" type="user" name="username" 
+                            placeholder="username" autofocus>
+                            <input  class="form-control flex-item" type="password" name="password" 
+                            placeholder="password" >
+	                    <input  class="form-control flex-item" type="password" name="password" 
+                            placeholder="confirm password" >
+	                    <br> <br>
+                            <input class="form-control flex-item" id = "submit" type="submit" 
+                            name="submit" value="Sign up!"><br>
+                        </center>
+                        <p id="error"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
