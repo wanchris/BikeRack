@@ -31,14 +31,12 @@ function convertToString(val){
 }
 
 window.onload=function(){
-    //Pressed Enter key on Search bar   
-    var returnString = ""; 
+    //Pressed Enter key on Search bar      
     var dropVal = "City";
     var input = document.getElementById("searchBox").onkeypress = function(e){
         var event =  e || window.event;
         var code = event.which || event.keyCode;
         if(code == '13'){   
-            returnString ="";
             dropVal = document.getElementById("searchBtn").textContent; 
             var ourRequest = new XMLHttpRequest();
             ourRequest.open('GET',"http://api.citybik.es/v2/networks/");
@@ -52,7 +50,7 @@ window.onload=function(){
     //Show search result output
     var output = document.getElementById("output");
     function renderHTML(data){
-        
+        var returnString = "";
         var curJSON = {};
         var curString ="";
         for(i=0; i<data.networks.length; i++){
