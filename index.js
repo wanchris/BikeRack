@@ -4,7 +4,7 @@ var path = require('path');
 var http= require('http');
 var mongoose = require('mongoose');
 
-var uristring = prcoess.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/index';
+var uristring = process.env.MONGODB_URI || process.env.MONGOLAB_RED_URI || 'mongodb://localhost/assignment3-bahen-hobos';
 
 var theport = process.env.PORT || 5000;
 
