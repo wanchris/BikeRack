@@ -82,6 +82,6 @@ window.onload=function(){
             }
         }
         //returnString = JSON.stringify(data.networks.company);
-        output.insertAdjacentHTML('beforeend', returnString);
+        output.innerHTML = returnString;
     }
 }
