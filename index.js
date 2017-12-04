@@ -1,6 +1,5 @@
 //setup =================================================
 var express = require('express');
-var app = express();
 var path = require('path');
 var http= require('http');
 var mongoose = require('mongoose');
@@ -9,11 +8,15 @@ var expressValidator = require('express-validator');
 var passport = require('passport');
 var pg = require('pg');
 var flash = require('connect-flash');
+var User = require('./models/users');
 var uristring = process.env.MONGODB_URI || process.env.MONGOLAB_RED_URI || 'mongodb://localhost/';
 var theport = process.env.PORT || 5000;
 var uristring = 'mongodb://heroku_f9nb6r1s:a0ojrjrdrr6at3br8s6efvuo35@ds129796.mlab.com:29796/heroku_f9nb6r1s';
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var app = express();
+
+const mainController = require('./controllers/main.controller.js');
 
 mongoose.connect(uristring, function (err, res){
   if (err){
@@ -23,6 +26,7 @@ mongoose.connect(uristring, function (err, res){
     console.log('Succeeded connected to: ' + uristring);
   } 
 });
+
 
 //config ==============================================
 require('./passport')(passport); 
@@ -44,25 +48,24 @@ app.use(flash());
 app.set('port', theport);
 
 app.use(express.static(__dirname + '/public'));
-
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 
-
+app.get('/', function(request, response) {
+  response.render('pages/index')
+});
 
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
 app.get('/', function(request, response) {
   response.render('pages/index')
-});
 
     app.get('/index', function(req, res) {
-        res.render('pages/index');
+        res.render('pages/index');  
     })
 
     app.get('/login', function(req, res) {
@@ -79,9 +82,9 @@ app.get('/', function(request, response) {
         });
     })
 
-    app.get('/search', function(req, res) {
-        res.render('pages/search');
-    })
+    app.get('/search', mainController.getSearch);
+
+    app.post('/locations/newId', mainController.newLocation);
 
 
     // process the login form
@@ -119,3 +122,5 @@ function loggedIn(req, res, next) {
 app.get('/user', function(req, res) {
         res.render('pages/user');
     })
+
+    app.post('/search/newUser', mainController.createUser);
