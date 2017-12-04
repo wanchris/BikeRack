@@ -1,15 +1,16 @@
 var Location = require('../models/locations');
-var User = require('../models/users');
+var User = require('../users');
 var Message = require('../models/message');
 var mongoose = require('mongoose');
 
 module.exports = {
     newLocation: newLocation,
-    createUser: createUser,
+//    createUser: createUser,
     getSearch: getSearch
 }
 
 function newLocation(req, res){
+    console.log("start");
     const errors = req.validationErrors();
     if (errors){
         req.flash("errors", errors.map(err => err.msg));
@@ -17,16 +18,26 @@ function newLocation(req, res){
     }
     else{
     //find user
-        User.findOne({
-            username: req.user
+        console.log('next');
+        Location.findOne({
+            'user': req.user.local.username
         })    
         .then(function (data){
+            console.log("away");
             if (!data){
-                console.log(req);
                 res.send("nothing in the database!");
             }
             else{
-                data.locations.push(req.name);
+                data.names.push(req.body.name);
+                Location.findOneAndUpdate({'user' : req.user.local.username}, 
+                {
+                    user: req.user.local.username,
+                    names: data.names
+                }, {upsert: true}, function(err, doc){
+                    if (err) return res.send(500, {error: err});
+                    console.log("successfully saved");
+                });
+                res.redirect('/search');
             }
         })
     //take user's location and add id to list if its not inside
@@ -34,6 +45,7 @@ function newLocation(req, res){
     }
 }
 
+/**
 function createUser(req, res){
     
         User.create(
@@ -52,22 +64,38 @@ function createUser(req, res){
         res.redirect("/search");    
     
 }
+**/
 
 function getSearch(req, res){
-    User.findOne({
-        username : 'Fred'
+    const errors = req.validationErrors();
+    //console.log(req.user.local.username);
+    if (errors){
+
+        req.flash('errors', errors.map(err => err.msg));
+        res.redirect('/user');
+    }
+    Location.findOne({
+        user : req.user.local.username 
     })
     .then (function(data){
+        var output = data;
         if (!data){
-            res.send("nothing in the database!");
+
+            Location.create({
+                user : req.user.local.username,
+                names : []
+            });
+            output = [];
         }
         else{
-            console.log(typeof(data.locations));
-            res.render('pages/search', 
-            {
-                locations : data.locations
-            });
+            output = data.names;
         }
+        res.render('pages/search', 
+        {
+            locations : output,
+            user : req.user.local.username
+        });
+    
     });
 
 

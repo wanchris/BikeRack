@@ -8,7 +8,7 @@ var expressValidator = require('express-validator');
 var passport = require('passport');
 var pg = require('pg');
 var flash = require('connect-flash');
-var User = require('./models/users');
+//var User = require('./models/users');
 var uristring = process.env.MONGODB_URI || process.env.MONGOLAB_RED_URI || 'mongodb://localhost/';
 var theport = process.env.PORT || 5000;
 var uristring = 'mongodb://heroku_f9nb6r1s:a0ojrjrdrr6at3br8s6efvuo35@ds129796.mlab.com:29796/heroku_f9nb6r1s';
@@ -63,7 +63,7 @@ app.listen(app.get('port'), function() {
 });
 app.get('/', function(request, response) {
   response.render('pages/index')
-
+})
     app.get('/index', function(req, res) {
         res.render('pages/index');  
     })
@@ -120,7 +120,15 @@ function loggedIn(req, res, next) {
     }); 
 
 app.get('/user', function(req, res) {
-        res.render('pages/user');
+        const errors = req.validationErrors();
+        if (errors){
+            req.flash('errors', errors.map(err =>err.msg));
+            res.redirec('/user');
+        }
+        //console.log(req.user.local.username);
+        res.render('pages/user', {
+            user: req.user.local.username
+        });
     })
 
-    app.post('/search/newUser', mainController.createUser);
+   // app.post('/search/newUser', mainController.createUser);

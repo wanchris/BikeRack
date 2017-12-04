@@ -130,8 +130,8 @@ window.onload=function(){
                     " City: " + convertToString(curJSON.location.city) + " Country: " 
                     + convertToString(curJSON.location.country);
                 returnString += "<form action='/locations/newId' method='post' style='margin: 0; padding: 0'> " + temp + 
-                " <input type='hidden' name='user' value=" + "Fred" + "/>" +
-                " <input type='hidden' name='name' value=" + JSON.stringify(curJSON.name) + "/>" +
+                
+                " <input type='hidden' name='name' value=" + convertToString(curJSON.name) + "/>" +
                 " <input value='Add' class='create-button btn' type='submit' style='display: inline;'/> </p> </form>"
             }
         }
