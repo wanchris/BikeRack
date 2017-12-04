@@ -13,53 +13,63 @@ $(function(){
     $("#submitSearch").click(enterPress);
 
     $("#results-btn").click(function(){
-        var obj = [$("#locations").text()]; 
-        alert(typeof([obj]));
-        alert(obj)
-        //var obj = $("#locations").text();
-        //console.log(obj.length);
-        alert([obj][0]);
-        for (location in obj){
-            console.log(location);
-        }
-        var locations = JSON.parse($("#locations").text());
-        alert(locations);
-        for (i = 0; i < locations.length; i++){
+        var locations = ("'" + $("#locations").text() + "'").split(",");
 
+        for (i = 0; i < locations.length; i++){
             search_append(locations[i]);
         }
+        
     });
 });
 
 function search_append(name){
+    name = trim(name, "'");
     var output = document.getElementById("output");
   
     var returnString = ""
     var curJSON = {};
     var curString ="";
     var temp = "";
-    for(i=0; i<data.networks.length; i++){
-        curJSON = data.networks[i];
-        curString += curJSON.name;
-        if (curString.indexOf(name) != -1){
-            temp = "<p>" + "Name: " + convertToString(curJSON.name) + 
-                " City: " + convertToString(curJSON.location.city) + " Country: " 
-                + convertToString(curJSON.location.country);
-            returnString  += temp + "</p>";
-            /**returnString += "<form action='/locations/removeId' method='post' style='margin: 0; padding: 0'/> " + temp + 
-            " <input type='hidden' name='user' value=" + "Fred" + "/>" +
-            " <input type='hidden' name='name' value=" + name + "/>" +
-            " <input value='Remove' class='create-button btn' type='submit' style='display: inline;'/> </p> </form>"
-            */
 
-            break;
+    $.ajax({
+        type: 'GET',
+        url: "http://api.citybik.es/v2/networks/",
+        success:function(data){
+            console.log("success " + name);
+            console.log(data.networks[0]);
+            console.log(data.networks[0].name);
+            for(i=0; i<data.networks.length; i++){
+                curJSON = data.networks[i];
+                curString += curJSON.name;
+                if (curString.indexOf(name) != -1){
+                    temp = "<p>" + "Name: " + convertToString(curJSON.name) + 
+                        " City: " + convertToString(curJSON.location.city) + " Country: " 
+                        + convertToString(curJSON.location.country);
+                    returnString  += temp + "</p>";
+
+                    break;
+                }   
+            }
+            output.insertAdjacentHTML('beforeend', returnString);
+            console.log(returnString);
+        },
+        error: function(xhr, error){
+            console.log("Something went wrong: ", error);
         }
-
-    }
+    })
     //returnString = JSON.stringify(data.networks.company);
-    output.insertAdjacentHTML('beforeend', returnString);
+
 }
 
+function trim(chars, id) {
+    while (id.indexOf(chars[0]) == 0) {
+        chars = chars.slice(1);
+    }
+    while (id.indexOf(chars[chars.length - 1]) == 0) {
+        chars = chars.slice(0, -1);
+    }
+    return chars;
+}
 
 
 var enterPress = function(){
