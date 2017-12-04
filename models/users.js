@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
+var Location = require('./locations');
+
+var locationSchema = mongoose.model('Location').schema;
 
 var userSchema = mongoose.Schema({
-    local: {
         username: String,
-        password: String
-    }
+        password: String,
+        locations: [locationSchema]
 
 });
 

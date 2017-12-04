@@ -5,4 +5,4 @@ var messageSchema = mongoose.Schema({
     message: {type: String, trim: true, min: 0}
 });
 
-module.exports = mongoose.model(Message, messageSchema);
+module.exports = mongoose.model('Message', messageSchema);
