@@ -1,5 +1,6 @@
 $(function(){
     $(".view").hide();
+    $("#locations").hide();
     $("#view-main").show();
     $(this).scrollTop(0);
     function display(view){
@@ -13,10 +14,13 @@ $(function(){
     $("#submitSearch").click(enterPress);
 
     $("#results-btn").click(function(){
-        var locations = ("'" + $("#locations").text() + "'").split(",");
+        var locations = $("#locations").text().split(",");
+        var output = document.getElementById("output").innerHTML = "";
 
-        for (i = 0; i < locations.length; i++){
-            search_append(locations[i]);
+        if(!(locations == 0)){
+            for (i = 0; i < locations.length; i++){
+                search_append(locations[i]);
+            }
         }
         
     });
@@ -35,9 +39,6 @@ function search_append(name){
         type: 'GET',
         url: "http://api.citybik.es/v2/networks/",
         success:function(data){
-            console.log("success " + name);
-            console.log(data.networks[0]);
-            console.log(data.networks[0].name);
             for(i=0; i<data.networks.length; i++){
                 curJSON = data.networks[i];
                 curString += curJSON.name;
@@ -45,13 +46,17 @@ function search_append(name){
                     temp = "<p>" + "Name: " + convertToString(curJSON.name) + 
                         " City: " + convertToString(curJSON.location.city) + " Country: " 
                         + convertToString(curJSON.location.country);
-                    returnString  += temp + "</p>";
+                    //returnString  += temp + "</p>";
+                    var user = "'" + $("#user").text() + "'";
 
+                    returnString += "<form action='/locations/removeId' method='post' style='margin: 0; padding: 0'/> " + temp + 
+                   " <input type='hidden' name='user' value=" + "'" + $("#user").text() + "'" + "/>" +
+                   " <input type='hidden' name='name' value=" + "'" + name + "'" + "/>" +
+                   " <input value='Remove' class='create-button btn' type='submit' style='display: inline;'/> </p> </form>"
                     break;
                 }   
             }
             output.insertAdjacentHTML('beforeend', returnString);
-            console.log(returnString);
         },
         error: function(xhr, error){
             console.log("Something went wrong: ", error);

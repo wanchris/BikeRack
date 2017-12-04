@@ -19,8 +19,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="/index">Home</a></li>
-		    <li><a href="/login">Log In</a></li>
-                    <li><a href="/signup">Sign Up</a></li>
+                    <li id="user"><a href="/index"><%= user %></a></li>
                     <li class="active"><a href="/search">Search</a></li>
                 </ul>
             </div>
@@ -60,10 +59,7 @@
                 <div class="container flex-text-container">
                     <div id="output"></div>
                 </div> 
-                    <form action="/search/newUser" method="post"> 
-                        <input name="random" value='Add' class='create-button btn' type='submit'>
-                    </form>
-                    <p id="locations"><%= locations %></p>
+                <p id="locations"><%= locations %></p>
 
             </div>
             <br><br>

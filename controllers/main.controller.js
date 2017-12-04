@@ -6,11 +6,11 @@ var mongoose = require('mongoose');
 module.exports = {
     newLocation: newLocation,
 //    createUser: createUser,
-    getSearch: getSearch
+    getSearch: getSearch,
+    removeLocation: removeLocation
 }
 
 function newLocation(req, res){
-    console.log("start");
     const errors = req.validationErrors();
     if (errors){
         req.flash("errors", errors.map(err => err.msg));
@@ -18,12 +18,10 @@ function newLocation(req, res){
     }
     else{
     //find user
-        console.log('next');
         Location.findOne({
             'user': req.user.local.username
         })    
         .then(function (data){
-            console.log("away");
             if (!data){
                 res.send("nothing in the database!");
             }
@@ -35,7 +33,6 @@ function newLocation(req, res){
                     names: data.names
                 }, {upsert: true}, function(err, doc){
                     if (err) return res.send(500, {error: err});
-                    console.log("successfully saved");
                 });
                 res.redirect('/search');
             }
@@ -45,6 +42,51 @@ function newLocation(req, res){
     }
 }
 
+
+function removeLocation(req, res){
+    const errors = req.validationErrors();
+    if (errors){
+        req.flash("errors", errors.map(err => err.msg));
+        res.redirect('/search');
+    }
+    else{
+        var user = req.body.user;
+        var name = req.body.name;
+
+
+        Location.findOne({
+            'user' : user
+        })
+        .then(function(data){
+            if(!data){
+                res.send("Could not find user!");
+            }
+            else{
+                var locations = data.names;
+                for (i = 0; i < locations.length; i++){
+                    if (locations[i] == name){
+                        locations.splice(i, 1);
+                        break;
+                    }
+                   
+                }
+                Location.findOneAndUpdate({'user' : user}, 
+                {
+                    user: user,
+                    names: locations
+                }, {upsert: true}, function(err, doc){
+                    if (err) return res.send(500, {error: err});
+                });
+            }
+
+        });
+        
+        res.redirect('/search');
+    }
+
+}
+
+        
 /**
 function createUser(req, res){
     

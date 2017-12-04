@@ -86,6 +86,8 @@ app.get('/', function(request, response) {
 
     app.post('/locations/newId', mainController.newLocation);
 
+    app.post('/locations/removeId', mainController.removeLocation);
+
 
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
@@ -130,5 +132,7 @@ app.get('/user', function(req, res) {
             user: req.user.local.username
         });
     })
+
+
 
    // app.post('/search/newUser', mainController.createUser);
