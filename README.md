@@ -1,39 +1,8 @@
-# node-js-getting-started
+## Features of Web Application
+While on vacation, tourists may find it difficult and expensive to rent cars and purchase insurance if they lack an international driving license. Public transit can also be difficult to navigate in foreign languages. Public bike sharing systems breaches the barrier of other expensive transit options and offers a healthier alternative to exploration. BikeRack allows users to pre-plan their destinations by locating city bike stations worldwide, allowing for an eco-friendly, affordable method of transit while travelling.  
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+Currently, the views of our website include a home page, login page, a sign up page, a log in confirmed page, and a search page. Existing users can log onto their account by clicking the log in button, and new users can sign up through the sign up button. The home page which contains general information about the website and how to use it. 
 
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+Users can choose to create an account by signing up with an email, username and password. Note that the username and email MUST be unique, or the user will be returned to the log in or sign up page. If the username and email have not been used for another account, the user will be redirected to a page where they can view stops that they have saved. Users can access the search feature to search for city bike stops utilizing the company name of the bike sharing service, or the country that they wish to travel to. The user can then see a collection of data including the locations and countries that the company services. 
 
-## Running Locally
-
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
-
-```sh
-$ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
-$ npm install
-$ npm start
-```
-
-Your app should now be running on [localhost:5000](http://localhost:5000/).
-
-## Deploying to Heroku
-
-```
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
-or
-
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-## Documentation
-
-For more information about using Node.js on Heroku, see these Dev Center articles:
-
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
+BikeRack aims to provide users with an aggregation of data on bike sharing locations worldwide, in order to reduce the costs of travel, as well as promote a healthy, environmentally friendly lifestyle. 
